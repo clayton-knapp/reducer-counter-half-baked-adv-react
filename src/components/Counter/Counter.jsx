@@ -29,7 +29,7 @@ function countAndColorReducer(state, action) {
     case 'DECREMENT':
       return { count: state.count - 1, currentColor: determineColor(state.count - 1) };
     case 'RESET':
-      return { count: 0, currentColor: determineColor(0) }
+      return { count: 0, currentColor: determineColor(0) };
   }
 }
 
