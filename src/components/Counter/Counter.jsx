@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+  useReducer
+} from 'react';
 import styles from './Counter.css';
 
 const colors = {
@@ -7,35 +11,58 @@ const colors = {
   red: 'rgb(239, 68, 68)',
 };
 
+// define initial state
+const initialState = { count: 0, currentColor: colors.yellow }
+
+// determine Color func
+
+function determineColor(count) {
+  if (count === 0) return colors.yellow;
+  else if (count > 0) return colors.green;
+  else if (count < 0) return colors.red;
+}
+
+
+// reducerFunction
+function reducerFunc(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1, currentColor: determineColor(state.count + 1) };
+  }
+}
+
 export default function Counter() {
-  const [count, setCount] = useState(0);
-  const [currentColor, setCurrentColor] = useState(colors.yellow);
+  // const [count, setCount] = useState(0);
+  // const [currentColor, setCurrentColor] = useState(colors.yellow);
 
-  useEffect(() => {
-    if (count === 0) {
-      setCurrentColor(colors.yellow);
-    }
+  // useReducer hook instead of useState
+  const [state, dispatch] = useReducer(reducerFunc, initialState);
 
-    if (count > 0) {
-      setCurrentColor(colors.green);
-    }
+  // useEffect(() => {
+  //   if (count === 0) {
+  //     setCurrentColor(colors.yellow);
+  //   }
 
-    if (count < 0) {
-      setCurrentColor(colors.red);
-    }
-  }, [count]);
+  //   if (count > 0) {
+  //     setCurrentColor(colors.green);
+  //   }
 
-  const increment = () => {
-    setCount((prevState) => prevState + 1);
-  };
+  //   if (count < 0) {
+  //     setCurrentColor(colors.red);
+  //   }
+  // }, [count]);
 
-  const decrement = () => {
-    setCount((prevState) => prevState - 1);
-  };
+  // const increment = () => {
+  //   setCount((prevState) => prevState + 1);
+  // };
 
-  const reset = () => {
-    setCount(0);
-  };
+  // const decrement = () => {
+  //   setCount((prevState) => prevState - 1);
+  // };
+
+  // const reset = () => {
+  //   setCount(0);
+  // };
 
   return (
     <main className={styles.main}>
