@@ -58,19 +58,22 @@ export default function Counter() {
 
   const increment = () => {
     // setCount((prevState) => prevState + 1);
+    dispatch({ type: 'INCREMENT' });
   };
 
   const decrement = () => {
     // setCount((prevState) => prevState - 1);
+    dispatch({ type: 'DECREMENT' });
   };
 
   const reset = () => {
     // setCount(0);
+    dispatch({ type: 'RESET' });
   };
 
   return (
     <main className={styles.main}>
-      <h1 style={{ color: currentColor }}>{count}</h1>
+      <h1 style={{ color: state.currentColor }}>{state.count}</h1>
       <div>
         <button
           type="button"
