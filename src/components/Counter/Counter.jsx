@@ -36,38 +36,19 @@ function countAndColorReducer(state, action) {
 }
 
 export default function Counter() {
-  // const [count, setCount] = useState(0);
-  // const [currentColor, setCurrentColor] = useState(colors.yellow);
 
   // useReducer hook instead of useState
   const [state, dispatch] = useReducer(countAndColorReducer, initialState);
 
-  // useEffect(() => {
-  //   if (count === 0) {
-  //     setCurrentColor(colors.yellow);
-  //   }
-
-  //   if (count > 0) {
-  //     setCurrentColor(colors.green);
-  //   }
-
-  //   if (count < 0) {
-  //     setCurrentColor(colors.red);
-  //   }
-  // }, [count]);
-
   const increment = () => {
-    // setCount((prevState) => prevState + 1);
     dispatch({ type: 'INCREMENT' });
   };
 
   const decrement = () => {
-    // setCount((prevState) => prevState - 1);
     dispatch({ type: 'DECREMENT' });
   };
 
   const reset = () => {
-    // setCount(0);
     dispatch({ type: 'RESET' });
   };
 
@@ -77,7 +58,7 @@ export default function Counter() {
       <div>
         <button
           type="button"
-          onClick={increment}
+          onClick={(increment)}
           aria-label="increment"
           style={{ backgroundColor: colors.green }}
         >
