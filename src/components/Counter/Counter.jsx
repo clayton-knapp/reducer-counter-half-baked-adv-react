@@ -1,6 +1,6 @@
 import {
-  useEffect,
-  useState,
+  // useEffect,
+  // useState,
   useReducer
 } from 'react';
 import styles from './Counter.css';
@@ -15,15 +15,13 @@ const colors = {
 const initialState = { count: 0, currentColor: colors.yellow }
 
 // determine Color func
-
 function determineColor(count) {
   if (count === 0) return colors.yellow;
   else if (count > 0) return colors.green;
   else if (count < 0) return colors.red;
 }
 
-
-// reducerFunction
+// reducer Function
 function countAndColorReducer(state, action) {
   switch (action.type) {
     case 'INCREMENT':
@@ -40,6 +38,7 @@ export default function Counter() {
   // useReducer hook instead of useState
   const [state, dispatch] = useReducer(countAndColorReducer, initialState);
 
+  // helper functions - could refactor these into onClick=()=>dispatch but will leave as is
   const increment = () => {
     dispatch({ type: 'INCREMENT' });
   };
