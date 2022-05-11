@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import {
+  // useEffect,
+  // useState,
+  useReducer
+} from 'react';
 import styles from './Counter.css';
 
 const colors = {
@@ -7,43 +11,53 @@ const colors = {
   red: 'rgb(239, 68, 68)',
 };
 
+// define initial state
+const initialState = { count: 0, currentColor: colors.yellow }
+
+// determine Color func
+function determineColor(count) {
+  if (count === 0) return colors.yellow;
+  else if (count > 0) return colors.green;
+  else if (count < 0) return colors.red;
+}
+
+// reducer Function
+function countAndColorReducer(state, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1, currentColor: determineColor(state.count + 1) };
+    case 'DECREMENT':
+      return { count: state.count - 1, currentColor: determineColor(state.count - 1) };
+    case 'RESET':
+      return { count: 0, currentColor: determineColor(0) };
+  }
+}
+
 export default function Counter() {
-  const [count, setCount] = useState(0);
-  const [currentColor, setCurrentColor] = useState(colors.yellow);
 
-  useEffect(() => {
-    if (count === 0) {
-      setCurrentColor(colors.yellow);
-    }
+  // useReducer hook instead of useState
+  const [state, dispatch] = useReducer(countAndColorReducer, initialState);
 
-    if (count > 0) {
-      setCurrentColor(colors.green);
-    }
-
-    if (count < 0) {
-      setCurrentColor(colors.red);
-    }
-  }, [count]);
-
+  // helper functions - could refactor these into onClick=()=>dispatch but will leave as is
   const increment = () => {
-    setCount((prevState) => prevState + 1);
+    dispatch({ type: 'INCREMENT' });
   };
 
   const decrement = () => {
-    setCount((prevState) => prevState - 1);
+    dispatch({ type: 'DECREMENT' });
   };
 
   const reset = () => {
-    setCount(0);
+    dispatch({ type: 'RESET' });
   };
 
   return (
     <main className={styles.main}>
-      <h1 style={{ color: currentColor }}>{count}</h1>
+      <h1 style={{ color: state.currentColor }}>{state.count}</h1>
       <div>
         <button
           type="button"
-          onClick={increment}
+          onClick={(increment)}
           aria-label="increment"
           style={{ backgroundColor: colors.green }}
         >
